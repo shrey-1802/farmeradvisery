@@ -188,6 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
+  // Setup Modal GPS Detect Button
+  const modalDetectGpsBtn = document.getElementById('modal-detect-gps-btn');
+  if (modalDetectGpsBtn) {
+    modalDetectGpsBtn.addEventListener('click', () => {
+      performAccurateLocationTrack(modalDetectGpsBtn, () => {
+        const modal = document.getElementById('location-modal');
+        if (modal) modal.classList.remove('active');
+      });
+    });
+  }
+
   // Setup Language Selector
   setupModal(
     'navbar-lang-btn',
@@ -541,11 +552,182 @@ document.addEventListener('DOMContentLoaded', () => {
     state: '',
     district: '',
     village: '',
+    latitude: null,
+    longitude: null,
     landArea: 5.0,
     soilType: '',
     waterSources: [],
     waterReliability: ''
   };
+
+  // Accurate Geolocation Tracker Function with Real Reverse Geocoding
+  const performAccurateLocationTrack = (btnElement, callback) => {
+    if (btnElement) {
+      btnElement.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Detecting Precise GPS Location...';
+      btnElement.disabled = true;
+    }
+
+    if (!navigator.geolocation) {
+      showToast('❌ Geolocation is not supported by your browser.', 4000, 'GPS Error');
+      if (btnElement) {
+        btnElement.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
+        btnElement.disabled = false;
+      }
+      return;
+    }
+
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const accuracy = position.coords.accuracy;
+
+        showToast(`📡 GPS Lock Acquired (±${Math.round(accuracy)}m). Geocoding location...`, 3000, 'GPS Active');
+
+        try {
+          let district = '';
+          let state = '';
+          let pincode = '';
+          let village = '';
+
+          // 1. Try BigDataCloud reverse geocode client API
+          try {
+            const bdcRes = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`);
+            if (bdcRes.ok) {
+              const geoData = await bdcRes.json();
+              district = geoData.locality || geoData.city || geoData.principalSubdivisionCode || '';
+              state = geoData.principalSubdivision || '';
+              pincode = geoData.postcode || '';
+              village = geoData.locality || '';
+            }
+          } catch (e) {
+            console.warn('BigDataCloud geocode failed', e);
+          }
+
+          // 2. Try OpenStreetMap Nominatim fallback
+          if (!district || !state) {
+            try {
+              const osmRes = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+              if (osmRes.ok) {
+                const osmData = await osmRes.json();
+                const addr = osmData.address || {};
+                district = district || addr.county || addr.state_district || addr.city || addr.town || addr.village || '';
+                state = state || addr.state || '';
+                pincode = pincode || addr.postcode || '';
+                village = village || addr.village || addr.suburb || addr.neighbourhood || '';
+              }
+            } catch (e) {
+              console.warn('Nominatim geocode failed', e);
+            }
+          }
+
+          district = district || 'Tracked Region';
+          state = state || '';
+
+          // Save accurate details to global profile
+          farmerProfile.latitude = lat;
+          farmerProfile.longitude = lng;
+          farmerProfile.district = district;
+          farmerProfile.state = state;
+          if (pincode) farmerProfile.pincode = pincode;
+          if (village) farmerProfile.village = village;
+
+          const locationString = state ? `${district}, ${state}` : district;
+
+          // Sync Header & Overlay Text
+          if (locationText) locationText.textContent = locationString;
+          if (locationOverlayText) locationOverlayText.textContent = `📍 ${district} Fields`;
+
+          const dashLocText = document.getElementById('dash-location-text');
+          if (dashLocText) dashLocText.textContent = locationString;
+
+          // Populate Onboarding Inputs if visible
+          const stateEl = document.getElementById('ob-state');
+          const districtEl = document.getElementById('ob-district');
+          const pincodeEl = document.getElementById('ob-pincode');
+          const villageEl = document.getElementById('ob-village');
+
+          if (districtEl) districtEl.value = district;
+          if (pincodeEl && pincode) pincodeEl.value = pincode;
+          if (villageEl && village) villageEl.value = village;
+          if (stateEl && state) {
+            let matchFound = false;
+            for (let i = 0; i < stateEl.options.length; i++) {
+              if (stateEl.options[i].text.toLowerCase() === state.toLowerCase()) {
+                stateEl.selectedIndex = i;
+                matchFound = true;
+                break;
+              }
+            }
+            if (!matchFound) {
+              const newOpt = new Option(state, state);
+              stateEl.add(newOpt);
+              stateEl.value = state;
+            }
+          }
+
+          showMapPreview(district, state || 'India');
+          showToast(`🎯 Location tracked: ${locationString} (${lat.toFixed(4)}, ${lng.toFixed(4)})`, 4000, 'GPS Success');
+
+          if (btnElement) {
+            btnElement.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${district}, ${state}`;
+            btnElement.style.borderColor = 'var(--krishi-green-700)';
+            btnElement.style.color = 'var(--krishi-green-700)';
+            btnElement.disabled = false;
+          }
+
+          if (isLoggedIn) {
+            updateDashboardView();
+          }
+
+          if (typeof callback === 'function') callback(locationString, lat, lng);
+
+        } catch (err) {
+          console.error('Reverse Geocode Exception:', err);
+          farmerProfile.latitude = lat;
+          farmerProfile.longitude = lng;
+          const locStr = `Lat: ${lat.toFixed(3)}, Lng: ${lng.toFixed(3)}`;
+          
+          if (locationText) locationText.textContent = locStr;
+          showToast(`📍 GPS Coordinates Captured: ${lat.toFixed(4)}, ${lng.toFixed(4)}`, 4000, 'GPS Acquired');
+
+          if (btnElement) {
+            btnElement.innerHTML = `<i class="fa-solid fa-circle-check"></i> GPS Tracked`;
+            btnElement.disabled = false;
+          }
+          if (typeof callback === 'function') callback(locStr, lat, lng);
+        }
+      },
+      (error) => {
+        let errMessage = 'Unable to fetch your GPS location.';
+        if (error.code === error.PERMISSION_DENIED) {
+          errMessage = '⚠️ Geolocation permission denied. Please allow location access in browser settings.';
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          errMessage = '⚠️ Location position unavailable. Please check GPS connection.';
+        } else if (error.code === error.TIMEOUT) {
+          errMessage = '⚠️ GPS location request timed out.';
+        }
+        showToast(errMessage, 5000, 'GPS Alert');
+
+        if (btnElement) {
+          btnElement.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
+          btnElement.disabled = false;
+        }
+      },
+      options
+    );
+  };
+
+  // Automatically trigger accurate GPS detection on startup
+  if (navigator.geolocation) {
+    performAccurateLocationTrack();
+  }
 
   let currentWizardStep = 1;
   const totalWizardSteps = 5;
@@ -621,38 +803,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const obDetectLocation = document.getElementById('ob-detect-location');
   if (obDetectLocation) {
     obDetectLocation.addEventListener('click', () => {
-      obDetectLocation.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Detecting location...';
-      obDetectLocation.disabled = true;
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            // Simulate reverse geocode with placeholder values
-            const stateEl = document.getElementById('ob-state');
-            const districtEl = document.getElementById('ob-district');
-            const pincodeEl = document.getElementById('ob-pincode');
-            if (stateEl) stateEl.value = 'Kerala';
-            if (districtEl) districtEl.value = 'Palakkad';
-            if (pincodeEl) pincodeEl.value = '678001';
-
-            showMapPreview('Palakkad', 'Kerala');
-            showToast('📍 Location detected: Palakkad, Kerala', 3000, 'Location');
-            obDetectLocation.innerHTML = '<i class="fa-solid fa-circle-check"></i> Location Detected';
-            obDetectLocation.style.borderColor = 'var(--krishi-green-700)';
-            obDetectLocation.style.color = 'var(--krishi-green-700)';
-            obDetectLocation.disabled = false;
-          },
-          () => {
-            showToast('📍 Location access denied. Please select from select boxes.', 3000, 'Location');
-            obDetectLocation.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
-            obDetectLocation.disabled = false;
-          }
-        );
-      } else {
-        showToast('Geolocation not supported. Please enter manually.', 3000);
-        obDetectLocation.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Use Current Location';
-        obDetectLocation.disabled = false;
-      }
+      performAccurateLocationTrack(obDetectLocation);
     });
   }
 
@@ -1092,8 +1243,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const fetchDashboardWeather = () => {
-    const lat = 10.7867; // Palakkad coords fallback
-    const lon = 76.6547;
+    const lat = farmerProfile.latitude || 23.0225;
+    const lon = farmerProfile.longitude || 72.5714;
     
     fetch(`http://localhost:3000/api/v1/weather/current?latitude=${lat}&longitude=${lon}`)
     .then(res => res.json())

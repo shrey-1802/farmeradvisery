@@ -38,7 +38,12 @@ export class WeatherService {
       };
     }
 
-    // Default coordinates if not provided (Gujarat center region)
+    // Log and set coordinates
+    if (latitude && longitude) {
+      this.logger.log(`Fetching weather for accurate coordinates: (${latitude}, ${longitude})`);
+    } else {
+      this.logger.warn(`No coordinates provided. Using default fallback coordinates (23.0225, 72.5714)`);
+    }
     const lat = latitude ?? 23.0225;
     const lng = longitude ?? 72.5714;
 

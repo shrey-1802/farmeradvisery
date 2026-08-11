@@ -24,7 +24,7 @@
       <div class="nav-pills">
         <button class="location-pill" id="navbar-location-btn" aria-haspopup="dialog">
           <i class="fa-solid fa-location-dot"></i>
-          <span id="current-location-text">Palakkad, Kerala</span>
+          <span id="current-location-text">Detecting Location...</span>
           <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
         </button>
       </div>
@@ -1096,9 +1096,12 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
       <h2 class="modal-title" id="location-modal-title">Select Location</h2>
-      <p class="modal-subtitle">Choose your district for localized weather and advisory.</p>
+      <p class="modal-subtitle">Auto-detect via GPS or choose a district for localized weather and advisory.</p>
+      <button class="btn-location-detect" id="modal-detect-gps-btn" style="margin-bottom: 16px; width: 100%;">
+        <i class="fa-solid fa-location-crosshairs"></i> Auto-Detect My Location (GPS)
+      </button>
       <div class="modal-options-list">
-        <div class="modal-option-item selected" data-value="Palakkad, Kerala">
+        <div class="modal-option-item" data-value="Palakkad, Kerala">
           <span>Palakkad, Kerala</span>
         </div>
         <div class="modal-option-item" data-value="Nashik, Maharashtra">
