@@ -21,30 +21,30 @@ export class EnvironmentVariables {
   API_PREFIX: string = 'api/v1';
 
   @IsString()
-  DB_HOST: string = 'localhost';
+  DB_HOST: string;
 
   @IsNumber()
   DB_PORT: number = 3306;
 
   @IsString()
-  DB_NAME: string = 'crop_advisory';
+  DB_NAME: string;
 
   @IsString()
-  DB_USER: string = 'root';
+  DB_USER: string;
 
   @IsString()
   @IsOptional()
-  DB_PASSWORD?: string = '';
+  DB_PASSWORD?: string;
 
   @IsNumber()
   @IsOptional()
   DB_CONNECTION_LIMIT: number = 10;
 
   @IsString()
-  JWT_ACCESS_SECRET: string = 'super_secret_farmer_access_key_2026';
+  JWT_ACCESS_SECRET: string;
 
   @IsString()
-  JWT_REFRESH_SECRET: string = 'super_secret_farmer_refresh_key_2026';
+  JWT_REFRESH_SECRET: string;
 
   @IsString()
   @IsOptional()
@@ -55,14 +55,14 @@ export class EnvironmentVariables {
   JWT_REFRESH_EXPIRES_IN: string = '30d';
 
   @IsString()
-  REDIS_HOST: string = 'localhost';
+  REDIS_HOST: string;
 
   @IsNumber()
   REDIS_PORT: number = 6379;
 
   @IsString()
   @IsOptional()
-  REDIS_PASSWORD?: string = '';
+  REDIS_PASSWORD?: string;
 
   @IsString()
   @IsOptional()
