@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krishi Sahayak — AI-Powered Farmer Advisory</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Desktop Header -->
+  <header class="navbar-desktop">
+    <div class="container navbar-container">
+      <div class="navbar-brand">
+        <div class="logo-tile">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <span class="brand-name">Krishi Sahayak</span>
+      </div>
+
+      <div class="nav-pills">
+        <button class="location-pill" id="navbar-location-btn" aria-haspopup="dialog">
+          <i class="fa-solid fa-location-dot"></i>
+          <span id="current-location-text">Palakkad, Kerala</span>
+          <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+        </button>
+      </div>
+
+      <nav class="navbar-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#dashboard" class="nav-link">Dashboard</a>
+        <a href="#myfarm" class="nav-link">My Farm</a>
+        <a href="#advisory" class="nav-link">Advisory</a>
+        <a href="#scan" class="nav-link">Disease Scanner</a>
+        <a href="#weather" class="nav-link">Weather</a>
+        <a href="#schemes" class="nav-link">Schemes</a>
+        <a href="#expert" class="nav-link">Expert Help</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <button class="lang-pill" id="navbar-lang-btn" aria-haspopup="dialog">
+          <i class="fa-solid fa-globe"></i>
+          <span id="current-lang-text">English</span>
+          <i class="fa-solid fa-chevron-down" style="font-size: 10px;"></i>
+        </button>
+        <button class="profile-avatar" id="navbar-profile-btn" aria-label="Farmer Profile">
+          <span id="avatar-initial">R</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="navbar-mobile-bottom">
+    <div class="mobile-nav-container">
+      <a href="#home" class="mobile-nav-item active" id="mob-nav-home">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a href="#myfarm" class="mobile-nav-item" id="mob-nav-farm">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span>My Farm</span>
+      </a>
+      <a href="#scan" class="mobile-nav-item" id="mob-nav-scan">
+        <i class="fa-solid fa-camera"></i>
+        <span>Scan</span>
+      </a>
+      <a href="#ai" class="mobile-nav-item" id="mob-nav-ai">
+        <i class="fa-solid fa-comments"></i>
+        <span>Krishi AI</span>
+      </a>
+      <a href="#profile" class="mobile-nav-item" id="mob-nav-profile">
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Floating AI Button -->
+  <button class="floating-ai-btn" id="floating-ai-btn" aria-label="Ask Krishi AI Assistant">
+    <i class="fa-solid fa-robot"></i>
+  </button>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-content container">
+    <!-- Welcome/Landing Page (Phase 1) -->
+    <section id="landing-section" class="app-section">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <!-- Trust Badge -->
+          <div class="trust-badge">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>Trusted by Farmers Across India</span>
+          </div>
+
+          <!-- Hero Headline & Subtitle -->
+          <h1 class="hero-title">Your Farm. <br>Your Data. <br><span>Smarter Decisions.</span></h1>
+          <p class="hero-subtitle">
+            AI-powered crop advisory, live weather forecasts, and disease detection tailored directly to your soil and water availability.
+          </p>
+
+          <!-- Call to Actions -->
+          <div class="hero-ctas">
+            <button class="btn-primary" id="btn-get-started">
+              Get Started <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <button class="btn-secondary" id="btn-learn-more">
+              Learn How It Works
+            </button>
+          </div>
+
+          <!-- Inline Mini-Chat Card -->
+          <div class="mini-chat-card">
+            <div class="mini-chat-label">
+              <i class="fa-solid fa-robot"></i>
+              <span>Ask Krishi AI</span>
+            </div>
+            <div class="mini-chat-input-row">
+              <input type="text" class="mini-chat-input" id="mini-chat-input" placeholder="Ask Krishi AI... e.g. Why are my wheat leaves turning yellow?" aria-label="Ask Krishi AI">
+              <div class="mini-chat-actions">
+                <button class="mini-chat-btn" id="mini-chat-mic" aria-label="Voice input">
+                  <i class="fa-solid fa-microphone"></i>
+                </button>
+                <button class="mini-chat-btn" id="mini-chat-camera" aria-label="Upload crop image">
+                  <i class="fa-solid fa-camera"></i>
+                </button>
+                <button class="mini-chat-btn mini-chat-send" id="mini-chat-send" aria-label="Send message">
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <!-- Hero Image -->
+          <div class="hero-image-wrapper">
+            <img src="farmer_hero.png" alt="Happy Indian farmer holding a smartphone in a green, sunny field" width="560" height="480">
+            <!-- Floating overlay chip -->
+            <div class="location-overlay-chip">
+              <i class="fa-solid fa-location-dot" style="color: var(--krishi-amber-400);"></i>
+              <span>📍 Palakkad Rice Belt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Strip Section -->
+      <div class="features-section">
+        <h2 class="features-title">Features Built For Your Success</h2>
+        <div class="features-grid">
+          <!-- Feature 1: Advisory -->
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+            <h3>Personalized Crop Advisory</h3>
+          </div>
+          <!-- Feature 2: Weather -->
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-cloud-sun-rain"></i>
+            </div>
+            <h3>Live Weather Intelligence</h3>
+          </div>
+          <!-- Feature 3: Scan -->
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-camera-retro"></i>
+            </div>
+            <h3>AI Disease Detection</h3>
+          </div>
+          <!-- Feature 4: Assistant -->
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <h3>AI Farmer Assistant</h3>
+          </div>
+          <!-- Feature 5: Expert -->
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-user-doctor"></i>
+            </div>
+            <h3>Expert Support</h3>
+          </div>
+          <!-- Feature 6: Schemes -->
+          <div class="feature-card">
+            <div class="feature-icon-circle">
+              <i class="fa-solid fa-landmark"></i>
+            </div>
+            <h3>Government Schemes</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Farmer Login Section (Phase 2) -->
+    <section id="login-section" class="app-section" style="display: none;">
+      <div class="form-container">
+        <div class="form-card">
+          <!-- Small SVG Line-art Agricultural Landscape Illustration -->
+          <div class="illustration-container">
+            <svg viewBox="0 0 200 100" class="farm-illustration" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,80 Q50,60 100,80 T200,80 L200,100 L0,100 Z" fill="var(--krishi-green-100)"/>
+              <path d="M0,90 Q70,70 140,90 T200,90 L200,100 L0,100 Z" fill="var(--krishi-green-200)" opacity="0.5"/>
+              <circle cx="150" cy="35" r="12" fill="var(--krishi-amber-400)" opacity="0.8"/>
+              <!-- Simple house/barn outline -->
+              <rect x="25" y="65" width="20" height="15" fill="none" stroke="var(--krishi-earth-500)" stroke-width="2"/>
+              <polygon points="20,65 35,50 50,65" fill="none" stroke="var(--krishi-earth-500)" stroke-width="2"/>
+              <!-- Simple tree -->
+              <line x1="90" y1="80" x2="90" y2="65" stroke="var(--krishi-earth-500)" stroke-width="3"/>
+              <circle cx="90" cy="58" r="10" fill="var(--krishi-green-600)"/>
+            </svg>
+          </div>
+
+          <h2 class="form-title">Welcome, Farmer 👋</h2>
+          <p class="form-subtitle">Enter your mobile number to log in or register.</p>
+
+          <div class="input-group">
+            <label for="login-mobile" class="input-label">Mobile Number</label>
+            <div class="mobile-input-wrapper">
+              <span class="country-code">+91</span>
+              <input type="tel" id="login-mobile" class="large-input" placeholder="Enter 10 digit number" maxlength="10" pattern="[0-9]{10}" inputmode="numeric">
+            </div>
+            <span class="error-msg" id="login-error-msg"></span>
+          </div>
+
+          <button class="btn-primary btn-full" id="btn-send-otp">
+            Send OTP <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- OTP Verification Section (Phase 2) -->
+    <section id="otp-section" class="app-section" style="display: none;">
+      <div class="form-container">
+        <div class="form-card">
+          <div class="back-link-wrapper">
+            <button class="btn-back" id="btn-back-to-login">
+              <i class="fa-solid fa-arrow-left"></i> Change Number
+            </button>
+          </div>
+
+          <h2 class="form-title">Verify OTP</h2>
+          <p class="form-subtitle">We sent a 6-digit OTP code to <strong id="display-mobile-number">+91 XXXXX XXXXX</strong></p>
+
+          <div class="otp-inputs-wrapper">
+            <input type="text" class="otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 1">
+            <input type="text" class="otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 2">
+            <input type="text" class="otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 3">
+            <input type="text" class="otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 4">
+            <input type="text" class="otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 5">
+            <input type="text" class="otp-input" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit 6">
+          </div>
+          <span class="error-msg" id="otp-error-msg"></span>
+
+          <div class="otp-timer-row">
+            <span id="otp-timer-text">Resend OTP in <strong id="otp-countdown">30</strong> seconds</span>
+            <button class="btn-text" id="btn-resend-otp" style="display: none;">Resend OTP</button>
+          </div>
+
+          <button class="btn-primary btn-full" id="btn-verify-otp">
+            Verify & Continue <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 3 — Farmer Onboarding Wizard -->
+    <section id="onboarding-section" class="app-section" style="display: none;">
+      <div class="onboarding-container">
+
+        <!-- Progress Indicator -->
+        <div class="onboarding-progress">
+          <div class="progress-track">
+            <div class="progress-fill" id="onboarding-progress-fill" style="width: 20%;"></div>
+          </div>
+          <div class="progress-steps">
+            <div class="progress-step active" data-step="1">
+              <div class="step-dot"><i class="fa-solid fa-user"></i></div>
+              <span>Details</span>
+            </div>
+            <div class="progress-step" data-step="2">
+              <div class="step-dot"><i class="fa-solid fa-location-dot"></i></div>
+              <span>Location</span>
+            </div>
+            <div class="progress-step" data-step="3">
+              <div class="step-dot"><i class="fa-solid fa-seedling"></i></div>
+              <span>Land</span>
+            </div>
+            <div class="progress-step" data-step="4">
+              <div class="step-dot"><i class="fa-solid fa-mountain-sun"></i></div>
+              <span>Soil</span>
+            </div>
+            <div class="progress-step" data-step="5">
+              <div class="step-dot"><i class="fa-solid fa-droplet"></i></div>
+              <span>Water</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1: Farmer Details -->
+        <div class="wizard-step" id="wizard-step-1">
+          <div class="wizard-card">
+            <div class="wizard-step-badge">Step 1 of 5</div>
+            <h2 class="wizard-title">Tell Us About Yourself <span>&#x1F468;&#x200D;&#x1F33E;</span></h2>
+            <p class="wizard-subtitle">Your basic details help us personalize your farm advisory.</p>
+            <div class="input-group">
+              <label for="ob-name" class="input-label">Your Full Name</label>
+              <input type="text" id="ob-name" class="large-input" placeholder="e.g. Ramesh Patel" autocomplete="name">
+              <span class="error-msg" id="ob-name-error"></span>
+            </div>
+            <div class="input-group">
+              <label class="input-label">Mobile Number</label>
+              <div class="mobile-input-wrapper">
+                <span class="country-code">+91</span>
+                <input type="tel" id="ob-mobile-display" class="large-input" readonly style="cursor: not-allowed; opacity: 0.7;">
+              </div>
+              <span class="field-hint"><i class="fa-solid fa-lock" style="font-size:11px;"></i> Pre-filled from your login</span>
+            </div>
+            <div class="wizard-nav">
+              <div></div>
+              <button class="btn-primary" id="ob-step1-next">Next <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Farm Location -->
+        <div class="wizard-step" id="wizard-step-2" style="display: none;">
+          <div class="wizard-card">
+            <div class="wizard-step-badge">Step 2 of 5</div>
+            <h2 class="wizard-title">Where Is Your Farm? <span>&#x1F4CD;</span></h2>
+            <p class="wizard-subtitle">Location helps us give you accurate weather &amp; market data.</p>
+            <button class="btn-location-detect" id="ob-detect-location">
+              <i class="fa-solid fa-location-crosshairs"></i> Use Current Location
+            </button>
+            <div class="location-fields-grid">
+              <div class="input-group">
+                <label for="ob-pincode" class="input-label">Pincode</label>
+                <input type="text" id="ob-pincode" class="large-input" placeholder="e.g. 678001" maxlength="6" inputmode="numeric">
+                <span class="error-msg" id="ob-pincode-error"></span>
+              </div>
+              <div class="input-group">
+                <label for="ob-state" class="input-label">State</label>
+                <select id="ob-state" class="large-input select-input">
+                  <option value="">Select State</option>
+                  <option>Andhra Pradesh</option><option>Bihar</option><option>Gujarat</option>
+                  <option>Haryana</option><option>Karnataka</option><option>Kerala</option>
+                  <option>Madhya Pradesh</option><option>Maharashtra</option><option>Punjab</option>
+                  <option>Rajasthan</option><option>Tamil Nadu</option><option>Telangana</option>
+                  <option>Uttar Pradesh</option><option>West Bengal</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="ob-district" class="input-label">District</label>
+                <input type="text" id="ob-district" class="large-input" placeholder="e.g. Palakkad">
+              </div>
+              <div class="input-group">
+                <label for="ob-village" class="input-label">Village / Locality</label>
+                <input type="text" id="ob-village" class="large-input" placeholder="e.g. Mannarkkad">
+              </div>
+            </div>
+            <div class="map-preview-card" id="map-preview" style="display:none;">
+              <div class="map-preview-inner">
+                <div class="map-pin-anim"><i class="fa-solid fa-location-dot"></i></div>
+                <div class="map-label-block">
+                  <strong id="map-label-district">&#x2014;</strong>
+                  <span id="map-label-state">&#x2014;</span>
+                </div>
+                <div class="map-grid-overlay"></div>
+              </div>
+            </div>
+            <div class="wizard-nav">
+              <button class="btn-back" id="ob-step2-back"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn-primary" id="ob-step2-next">Next <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Land Details -->
+        <div class="wizard-step" id="wizard-step-3" style="display: none;">
+          <div class="wizard-card">
+            <div class="wizard-step-badge">Step 3 of 5</div>
+            <h2 class="wizard-title">How Big Is Your Farm? <span>&#x1F33E;</span></h2>
+            <p class="wizard-subtitle">Enter the total land area you own or cultivate.</p>
+            <div class="land-input-section">
+              <div class="land-area-display" id="land-area-display">5</div>
+              <div class="land-unit-label">Acres</div>
+              <div class="land-slider-wrapper">
+                <input type="range" id="ob-land-slider" class="land-slider" min="0.5" max="50" step="0.5" value="5">
+                <div class="slider-range-labels"><span>0.5 acres</span><span>50+ acres</span></div>
+              </div>
+              <div class="land-manual-wrapper">
+                <label for="ob-land-input" class="input-label" style="text-align:center;">Or enter manually</label>
+                <div class="land-manual-row">
+                  <button class="land-step-btn" id="land-minus">&#x2212;</button>
+                  <input type="number" id="ob-land-input" class="large-input land-number-input" value="5" min="0.5" max="200" step="0.5">
+                  <button class="land-step-btn" id="land-plus">+</button>
+                </div>
+              </div>
+              <span class="error-msg" id="ob-land-error"></span>
+            </div>
+            <div class="wizard-nav">
+              <button class="btn-back" id="ob-step3-back"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn-primary" id="ob-step3-next">Next <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Soil Type -->
+        <div class="wizard-step" id="wizard-step-4" style="display: none;">
+          <div class="wizard-card">
+            <div class="wizard-step-badge">Step 4 of 5</div>
+            <h2 class="wizard-title">What Type of Soil? <span>&#x1F3D4;&#xFE0F;</span></h2>
+            <p class="wizard-subtitle">Select your primary soil type to get the right crop &amp; fertilizer advice.</p>
+            <div class="selector-grid" id="soil-selector">
+              <div class="selector-card" data-value="Black Soil"><div class="selector-icon">&#x1FAA8;</div><div class="selector-name">Black Soil</div><div class="selector-hint">Good for cotton &amp; wheat</div></div>
+              <div class="selector-card" data-value="Red Soil"><div class="selector-icon">&#x1F534;</div><div class="selector-name">Red Soil</div><div class="selector-hint">Suitable for groundnut</div></div>
+              <div class="selector-card" data-value="Alluvial Soil"><div class="selector-icon">&#x1F7EB;</div><div class="selector-name">Alluvial Soil</div><div class="selector-hint">Most fertile — rice &amp; wheat</div></div>
+              <div class="selector-card" data-value="Sandy Soil"><div class="selector-icon">&#x1F3DC;&#xFE0F;</div><div class="selector-name">Sandy Soil</div><div class="selector-hint">Drains fast, low retention</div></div>
+              <div class="selector-card" data-value="Loamy Soil"><div class="selector-icon">&#x1F331;</div><div class="selector-name">Loamy Soil</div><div class="selector-hint">Ideal sand, silt &amp; clay mix</div></div>
+              <div class="selector-card" data-value="Other"><div class="selector-icon">&#x1F30D;</div><div class="selector-name">Other</div><div class="selector-hint">Mixed or uncommon type</div></div>
+              <div class="selector-card" data-value="Not Sure"><div class="selector-icon">&#x2753;</div><div class="selector-name">Not Sure</div><div class="selector-hint">We'll help identify later</div></div>
+            </div>
+            <span class="error-msg" id="ob-soil-error"></span>
+            <div class="wizard-nav">
+              <button class="btn-back" id="ob-step4-back"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn-primary" id="ob-step4-next">Next <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5: Water Supply -->
+        <div class="wizard-step" id="wizard-step-5" style="display: none;">
+          <div class="wizard-card">
+            <div class="wizard-step-badge">Step 5 of 5</div>
+            <h2 class="wizard-title">Water Supply Source <span>&#x1F4A7;</span></h2>
+            <p class="wizard-subtitle">Tell us how your farm gets water. Select all that apply.</p>
+            <div class="selector-grid multi-select" id="water-selector">
+              <div class="selector-card" data-value="Canal"><div class="selector-icon">&#x1F6BF;</div><div class="selector-name">Canal</div></div>
+              <div class="selector-card" data-value="Tube Well"><div class="selector-icon">&#x26FD;</div><div class="selector-name">Tube Well</div></div>
+              <div class="selector-card" data-value="Bore Well"><div class="selector-icon">&#x1F529;</div><div class="selector-name">Bore Well</div></div>
+              <div class="selector-card" data-value="Rainwater"><div class="selector-icon">&#x1F327;&#xFE0F;</div><div class="selector-name">Rainwater</div></div>
+              <div class="selector-card" data-value="Other"><div class="selector-icon">&#x1FAA3;</div><div class="selector-name">Other</div></div>
+            </div>
+            <span class="error-msg" id="ob-water-error"></span>
+            <div class="water-reliability-section">
+              <h3 class="wizard-section-label">How reliable is your water supply?</h3>
+              <div class="reliability-options" id="reliability-selector">
+                <div class="reliability-btn" data-value="Reliable"><i class="fa-solid fa-circle-check"></i> Reliable</div>
+                <div class="reliability-btn" data-value="Seasonal"><i class="fa-solid fa-calendar-alt"></i> Seasonal</div>
+                <div class="reliability-btn" data-value="Limited"><i class="fa-solid fa-triangle-exclamation"></i> Limited</div>
+                <div class="reliability-btn" data-value="Rain Dependent"><i class="fa-solid fa-cloud-rain"></i> Rain Dependent</div>
+              </div>
+              <span class="error-msg" id="ob-reliability-error"></span>
+            </div>
+            <div class="wizard-nav">
+              <button class="btn-back" id="ob-step5-back"><i class="fa-solid fa-arrow-left"></i> Back</button>
+              <button class="btn-primary btn-finish" id="ob-step5-finish">Complete Setup <i class="fa-solid fa-check"></i></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Phase 4 — Crop Planning Section -->
+    <section id="crop-planning-section" class="app-section" style="display: none;">
+      <div class="onboarding-container">
+        <div class="wizard-card">
+          <h2 class="wizard-title">Plan Your Farm Fields 🗺</h2>
+          <p class="wizard-subtitle">Divide your farm area into sectors and assign crops.</p>
+          
+          <div class="crop-select-grid">
+            <h3 class="wizard-section-label">1. Choose a Crop</h3>
+            <div class="selector-grid" id="planning-crop-selector">
+              <div class="selector-card" data-value="Wheat"><div class="selector-icon">🌾</div><div class="selector-name">Wheat</div></div>
+              <div class="selector-card" data-value="Rice"><div class="selector-icon">🍚</div><div class="selector-name">Rice</div></div>
+              <div class="selector-card" data-value="Maize"><div class="selector-icon">🌽</div><div class="selector-name">Maize</div></div>
+              <div class="selector-card" data-value="Cotton"><div class="selector-icon">☁️</div><div class="selector-name">Cotton</div></div>
+              <div class="selector-card" data-value="Groundnut"><div class="selector-icon">🥜</div><div class="selector-name">Groundnut</div></div>
+            </div>
+          </div>
+
+          <div class="crop-area-input input-group" style="margin-top: 20px;">
+            <label for="planning-crop-area" class="input-label">2. Specify Area (Acres)</label>
+            <div class="land-manual-row" style="justify-content: flex-start;">
+              <button class="land-step-btn" id="planning-area-minus" type="button">−</button>
+              <input type="number" id="planning-crop-area" class="large-input land-number-input" value="1.0" min="0.5" max="50" step="0.5">
+              <button class="land-step-btn" id="planning-area-plus" type="button">+</button>
+            </div>
+            <span class="error-msg" id="planning-area-error"></span>
+          </div>
+
+          <div class="compass-layout-section" style="margin-top: 24px;">
+            <h3 class="wizard-section-label">3. Assign to a Farm Sector</h3>
+            <p class="field-hint" style="margin-bottom: 12px;">Click a direction sector below to assign your selected crop and area.</p>
+            
+            <div class="compass-grid">
+              <div class="compass-sector n-sector" data-sector="North">
+                <span class="sector-dir">North</span>
+                <span class="sector-crop-info">Empty</span>
+              </div>
+              <div class="compass-middle">
+                <i class="fa-solid fa-compass"></i>
+              </div>
+              <div class="compass-sector w-sector" data-sector="West">
+                <span class="sector-dir">West</span>
+                <span class="sector-crop-info">Empty</span>
+              </div>
+              <div class="compass-sector e-sector" data-sector="East">
+                <span class="sector-dir">East</span>
+                <span class="sector-crop-info">Empty</span>
+              </div>
+              <div class="compass-sector s-sector" data-sector="South">
+                <span class="sector-dir">South</span>
+                <span class="sector-crop-info">Empty</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-nav" style="margin-top: 32px;">
+            <button class="btn-back" id="btn-planning-back"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <button class="btn-primary" id="btn-planning-finish">Go to Dashboard <i class="fa-solid fa-circle-check"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 5 — Farm Dashboard Section -->
+    <section id="dashboard-section" class="app-section" style="display: none;">
+      <div class="dashboard-header-block">
+        <h1 class="dashboard-greeting" style="font-family: var(--font-display); font-size: 2.2rem; margin-bottom: 4px;">Namaste, <span id="dash-farmer-name">Farmer</span> 👋</h1>
+        <p class="dashboard-location-sub" style="font-size: 15px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px;">
+          <i class="fa-solid fa-location-dot" style="color: var(--krishi-amber-400);"></i> 
+          <span id="dash-location-text">Palakkad, Kerala</span>
+        </p>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid" style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; margin-top: 24px;">
+        <!-- Left: Weather and Advisories -->
+        <div class="dash-column-left" style="display: flex; flex-direction: column; gap: 24px;">
+          <!-- Weather Card -->
+          <div class="weather-dashboard-card" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); padding: 24px; box-shadow: var(--shadow-card);">
+            <div class="weather-dash-top" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <div class="weather-dash-temp-col" style="display: flex; flex-direction: column; gap: 2px;">
+                <span class="weather-dash-temp" id="dash-weather-temp" style="font-size: 3.5rem; font-family: var(--font-display); font-weight: 700; color: var(--krishi-green-900); line-height: 1;">31°C</span>
+                <span class="weather-dash-condition" id="dash-weather-condition" style="font-size: 15px; font-weight: 600; color: var(--text-secondary);">Partly Cloudy</span>
+              </div>
+              <div class="weather-dash-icon" id="dash-weather-icon-container" style="font-size: 4rem; color: var(--krishi-sky-500); line-height: 1;">
+                <i class="fa-solid fa-cloud-sun-rain"></i>
+              </div>
+            </div>
+            <div class="weather-dash-details" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; border-top: 1px solid var(--krishi-beige-200); padding-top: 16px; margin-bottom: 16px;">
+              <div class="weather-detail-item" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;">
+                <i class="fa-solid fa-droplet" style="color: var(--krishi-sky-500); font-size: 18px;"></i>
+                <span class="detail-label" style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">Humidity</span>
+                <span class="detail-value" id="dash-weather-humidity" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">62%</span>
+              </div>
+              <div class="weather-detail-item" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;">
+                <i class="fa-solid fa-wind" style="color: var(--krishi-earth-500); font-size: 18px;"></i>
+                <span class="detail-label" style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">Wind</span>
+                <span class="detail-value" id="dash-weather-wind" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">14 km/h</span>
+              </div>
+              <div class="weather-detail-item" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;">
+                <i class="fa-solid fa-cloud-showers-water" style="color: var(--krishi-sky-500); font-size: 18px;"></i>
+                <span class="detail-label" style="font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600;">Rain Chance</span>
+                <span class="detail-value" id="dash-weather-rain-chance" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">20%</span>
+              </div>
+            </div>
+            <div class="weather-alert-banner" id="dash-weather-alert" style="display: none; background: var(--krishi-amber-100); border: 1.5px solid var(--krishi-amber-400); border-radius: var(--border-radius-sm); padding: 12px; color: #925f05; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600;">
+              <i class="fa-solid fa-circle-exclamation" style="font-size: 16px; color: var(--krishi-warning);"></i>
+              <span id="dash-weather-alert-text">Rain expected tomorrow. Consider postponing irrigation.</span>
+            </div>
+          </div>
+
+          <!-- Advisory Card -->
+          <div class="advisory-dashboard-card" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); padding: 24px; box-shadow: var(--shadow-card); display: flex; flex-direction: column;">
+            <h2 class="advisory-card-title" style="font-size: 1.3rem; color: var(--krishi-green-900); font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-seedling" style="color: var(--krishi-green-700);"></i> Today's Farm Advisory</h2>
+            <div class="advisory-card-content" style="flex: 1; min-height: 80px;">
+              <p class="advisory-text" id="dash-advisory-text" style="font-size: 15px; color: var(--text-primary); line-height: 1.5;">Loading personalized recommendations based on your crop and soil type...</p>
+              <div class="advisory-meta" id="dash-advisory-meta" style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px; font-size: 13px; color: var(--text-secondary); border-top: 1px dashed var(--krishi-beige-200); padding-top: 12px;">
+                <span class="meta-item"><i class="fa-solid fa-circle-info" style="color: var(--krishi-green-700);"></i> Reason: <strong id="dash-advisory-reason" style="color: var(--krishi-green-900);">Low soil moisture forecast</strong></span>
+                <span class="meta-item"><i class="fa-solid fa-clock" style="color: var(--krishi-amber-400);"></i> Time: <strong id="dash-advisory-time" style="color: var(--krishi-green-900);">Early Morning</strong></span>
+              </div>
+            </div>
+            <button class="btn-primary" id="btn-dash-view-advisory" style="margin-top: 20px; align-self: flex-start;">
+              View Full Advisory <i class="fa-solid fa-file-invoice" style="margin-left: 6px;"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Quick Actions -->
+        <div class="dash-column-right" style="display: flex; flex-direction: column; gap: 16px;">
+          <h3 class="dashboard-section-title" style="font-size: 1.15rem; color: var(--krishi-green-900); font-weight: 700; border-bottom: 2px solid var(--krishi-beige-200); padding-bottom: 8px;">Quick Actions</h3>
+          <div class="quick-actions-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div class="action-card" id="qa-scan" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px 16px; text-align: center; cursor: pointer; box-shadow: var(--shadow-card); transition: all 0.2s var(--ease-curve); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div class="action-icon" style="width: 48px; height: 48px; border-radius: 50%; background: var(--krishi-green-100); color: var(--krishi-green-700); display: flex; align-items: center; justify-content: center; font-size: 20px;"><i class="fa-solid fa-camera"></i></div>
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Disease Scan</h4>
+              <p style="font-size: 11px; color: var(--text-secondary); margin-top: -4px;">Identify crop pests</p>
+            </div>
+            <div class="action-card" id="qa-ai" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px 16px; text-align: center; cursor: pointer; box-shadow: var(--shadow-card); transition: all 0.2s var(--ease-curve); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div class="action-icon" style="width: 48px; height: 48px; border-radius: 50%; background: var(--krishi-amber-100); color: var(--krishi-warning); display: flex; align-items: center; justify-content: center; font-size: 20px;"><i class="fa-solid fa-comments"></i></div>
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Ask Krishi AI</h4>
+              <p style="font-size: 11px; color: var(--text-secondary); margin-top: -4px;">24/7 Advisor</p>
+            </div>
+            <div class="action-card" id="qa-weather" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px 16px; text-align: center; cursor: pointer; box-shadow: var(--shadow-card); transition: all 0.2s var(--ease-curve); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div class="action-icon" style="width: 48px; height: 48px; border-radius: 50%; background: var(--krishi-sky-100); color: var(--krishi-sky-500); display: flex; align-items: center; justify-content: center; font-size: 20px;"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Live Weather</h4>
+              <p style="font-size: 11px; color: var(--text-secondary); margin-top: -4px;">Hourly &amp; 5-Day</p>
+            </div>
+            <div class="action-card" id="qa-map" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px 16px; text-align: center; cursor: pointer; box-shadow: var(--shadow-card); transition: all 0.2s var(--ease-curve); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div class="action-icon" style="width: 48px; height: 48px; border-radius: 50%; background: var(--krishi-green-100); color: var(--krishi-green-700); display: flex; align-items: center; justify-content: center; font-size: 20px;"><i class="fa-solid fa-map-location-dot"></i></div>
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">My Farm</h4>
+              <p style="font-size: 11px; color: var(--text-secondary); margin-top: -4px;">Layout sectors</p>
+            </div>
+            <div class="action-card" id="qa-schemes" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px 16px; text-align: center; cursor: pointer; box-shadow: var(--shadow-card); transition: all 0.2s var(--ease-curve); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div class="action-icon" style="width: 48px; height: 48px; border-radius: 50%; background: var(--krishi-green-100); color: var(--krishi-green-700); display: flex; align-items: center; justify-content: center; font-size: 20px;"><i class="fa-solid fa-landmark"></i></div>
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Schemes</h4>
+              <p style="font-size: 11px; color: var(--text-secondary); margin-top: -4px;">Govt services</p>
+            </div>
+            <div class="action-card" id="qa-expert" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px 16px; text-align: center; cursor: pointer; box-shadow: var(--shadow-card); transition: all 0.2s var(--ease-curve); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div class="action-icon" style="width: 48px; height: 48px; border-radius: 50%; background: var(--krishi-amber-100); color: var(--krishi-earth-500); display: flex; align-items: center; justify-content: center; font-size: 20px;"><i class="fa-solid fa-user-doctor"></i></div>
+              <h4 style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Expert Help</h4>
+              <p style="font-size: 11px; color: var(--text-secondary); margin-top: -4px;">Officer support</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 6 — AI Chat Assistant -->
+    <section id="ai-chat-section" class="app-section" style="display: none;">
+      <div class="onboarding-container" style="max-width: 720px; padding-bottom: 20px;">
+        <div class="chat-container-card" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); overflow: hidden; display: flex; flex-direction: column; height: 600px; box-shadow: var(--shadow-soft);">
+          <div class="chat-header" style="background: var(--krishi-green-900); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1.5px solid var(--krishi-beige-200);">
+            <button class="btn-back" id="btn-chat-back" style="color: #FBF8F1;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+            <div class="chat-title-group" style="text-align: right; color: #FBF8F1;">
+              <h3 style="color: #FBF8F1; font-size: 15px; font-weight: 700;">Krishi AI Assistant 🤖</h3>
+              <span class="chat-status-indicator" style="font-size: 11px; color: var(--krishi-green-200);">● Active Context Enabled</span>
+            </div>
+          </div>
+
+          <div class="chat-messages-window" id="chat-messages-container" style="flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; background: var(--krishi-beige-50);">
+            <div class="chat-bubble bot" style="align-self: flex-start; background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-md) var(--border-radius-md) var(--border-radius-md) 0; padding: 12px 16px; max-width: 80%; box-shadow: var(--shadow-card);">
+              <div class="bubble-text" style="font-size: 14px; color: var(--text-primary); line-height: 1.45;">Namaste! I am Krishi AI, your smart farming companion. I am aware of your crop profile. How can I help you today?</div>
+            </div>
+          </div>
+
+          <!-- Suggested Queries -->
+          <div class="chat-suggestions-strip" id="chat-suggestions-container" style="display: flex; gap: 8px; padding: 10px 16px; background: var(--krishi-beige-100); overflow-x: auto; border-top: 1px solid var(--krishi-beige-200); white-space: nowrap;">
+            <button class="suggestion-pill" data-query="Should I irrigate today?" style="background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); color: var(--text-secondary); border-radius: var(--border-radius-pill); padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Should I irrigate today?</button>
+            <button class="suggestion-pill" data-query="Is rain expected?" style="background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); color: var(--text-secondary); border-radius: var(--border-radius-pill); padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Is rain expected?</button>
+            <button class="suggestion-pill" data-query="Which fertilizer should I use?" style="background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); color: var(--text-secondary); border-radius: var(--border-radius-pill); padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Which fertilizer should I use?</button>
+            <button class="suggestion-pill" data-query="Show my farm advisory" style="background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); color: var(--text-secondary); border-radius: var(--border-radius-pill); padding: 6px 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s;">Show my farm advisory</button>
+          </div>
+
+          <div class="chat-input-row" style="display: flex; gap: 8px; align-items: center; padding: 12px 16px; background: var(--krishi-beige-100); border-top: 1px solid var(--krishi-beige-200);">
+            <button class="chat-media-btn" id="chat-btn-attach" aria-label="Attach crop photo" style="width: 40px; height: 40px; border-radius: 50%; background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 16px;"><i class="fa-solid fa-paperclip"></i></button>
+            <button class="chat-media-btn" id="chat-btn-mic" aria-label="Voice input" style="width: 40px; height: 40px; border-radius: 50%; background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); font-size: 16px;"><i class="fa-solid fa-microphone"></i></button>
+            <input type="text" id="chat-input-text" class="chat-text-input" placeholder="Type agricultural question..." aria-label="Message text" style="flex: 1; border: 2px solid var(--krishi-beige-200); background: var(--krishi-beige-50); height: 42px; padding: 0 16px; border-radius: var(--border-radius-pill); font-size: 14px; font-family: var(--font-sans); outline: none; color: var(--text-primary);">
+            <button class="chat-send-btn" id="chat-btn-send" aria-label="Send message" style="width: 42px; height: 42px; border-radius: 50%; background: var(--krishi-green-700); color: white; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; transition: all 0.2s;"><i class="fa-solid fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 7 — AI Crop Disease Detection -->
+    <section id="disease-scan-section" class="app-section" style="display: none;">
+      <div class="onboarding-container">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-scan-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <h2 class="wizard-title">Crop Health Scanner 🌿</h2>
+          <p class="wizard-subtitle">Upload a clear photo of the affected crop leaf for instant diagnosis.</p>
+
+          <div class="scan-upload-zone" id="scan-dropzone" style="border: 3px dashed var(--krishi-green-200); border-radius: var(--border-radius-lg); background: var(--krishi-beige-50); padding: 48px 24px; text-align: center; cursor: pointer; transition: all 0.3s var(--ease-curve); margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; min-height: 220px;">
+            <div class="upload-zone-content" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <i class="fa-solid fa-cloud-arrow-up upload-icon" style="font-size: 3.5rem; color: var(--krishi-green-600); margin-bottom: 8px;"></i>
+              <p class="upload-text" style="font-size: 15px; font-weight: 600; color: var(--krishi-green-900);">Drag &amp; drop leaf photo here, or click to browse</p>
+              <span class="field-hint" style="font-size: 12px; color: var(--text-secondary);">Supports JPEG, PNG, WEBP (Max 10MB)</span>
+            </div>
+            <input type="file" id="scan-file-input" style="display: none;" accept="image/*">
+          </div>
+
+          <div class="scan-actions-row" style="display: flex; gap: 16px; margin-top: 16px;">
+            <button class="btn-secondary" style="flex: 1; padding: 14px 20px; font-size: 15px;" id="btn-scan-camera"><i class="fa-solid fa-camera" style="margin-right: 6px;"></i> Take Photo</button>
+            <button class="btn-primary" style="flex: 1; padding: 14px 20px; font-size: 15px;" id="btn-scan-submit"><i class="fa-solid fa-magnifying-glass" style="margin-right: 6px;"></i> Analyze Leaf</button>
+          </div>
+
+          <!-- Loading Scanner Overlay -->
+          <div class="scan-loading-card" id="scan-loader" style="display: none; background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); padding: 32px; text-align: center; margin-top: 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; animation: fadeSlideIn 0.3s both;">
+            <div class="scan-radar-anim" style="position: relative; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background: var(--krishi-green-100); border-radius: 50%; color: var(--krishi-green-700); font-size: 2.2rem; overflow: hidden; box-shadow: 0 0 20px rgba(47,93,58,0.15);">
+              <div class="radar-line" style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, var(--krishi-green-700), transparent); animation: scan-line 2s infinite linear;"></div>
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+            <p style="font-size: 14px; font-weight: 600; color: var(--text-secondary);">Scanning crop leaf pixels... analyzing neural network nodes...</p>
+          </div>
+
+          <!-- Analysis Result Card -->
+          <div class="scan-result-card" id="scan-result" style="display: none; margin-top: 28px; background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); padding: 24px; box-shadow: var(--shadow-card); animation: fadeSlideIn 0.4s both;">
+            <div class="result-header-row" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--krishi-beige-200); padding-bottom: 12px; margin-bottom: 16px;">
+              <h3 class="result-label" style="font-size: 1.15rem; color: var(--krishi-green-900); font-weight: 700;">Analysis Complete</h3>
+              <div class="confidence-badge" style="background: var(--krishi-amber-100); border: 1px solid var(--krishi-amber-400); color: #925f05; padding: 4px 12px; border-radius: var(--border-radius-pill); font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px;"><i class="fa-solid fa-circle-check" style="color: var(--krishi-success);"></i> <span id="scan-result-confidence">82%</span> Confidence</div>
+            </div>
+
+            <div class="result-panel" style="display: flex; flex-direction: column; gap: 14px;">
+              <div class="issue-row" style="display: flex; gap: 8px; align-items: center; font-size: 15px;">
+                <span class="issue-title" style="color: var(--text-secondary);">Possible Issue:</span>
+                <strong class="issue-name" id="scan-result-issue" style="color: var(--krishi-danger); font-size: 17px; font-weight: 700;">Yellow Rust (Leaf Spot)</strong>
+              </div>
+              
+              <div class="result-details">
+                <strong style="font-size: 14px; color: var(--krishi-green-900); display: block; margin-bottom: 4px;">What we found:</strong>
+                <p id="scan-result-desc" style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.45;">Pustules containing orange-yellow spores appear on leaf blades in linear stripes. This fungal disease spreads in cool, moist weather conditions.</p>
+              </div>
+
+              <div class="result-guidance">
+                <strong style="font-size: 14px; color: var(--krishi-green-900); display: block; margin-bottom: 4px;">Recommended Action:</strong>
+                <p id="scan-result-guidance" style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.45;">1. Avoid excessive nitrogen fertilizer application.<br>2. Irrigate early in the morning so crop foliage dries quickly.<br>3. If spreading, consult an expert or apply Propiconazole 25% EC dosage as recommended.</p>
+              </div>
+
+              <div class="result-disclaimer" style="background: var(--krishi-amber-100); border-left: 4px solid var(--krishi-warning); border-radius: 4px; padding: 10px 12px; color: #925f05; display: flex; gap: 8px; align-items: flex-start; font-size: 12px; font-weight: 600; line-height: 1.4;">
+                <i class="fa-solid fa-triangle-exclamation" style="margin-top: 2px;"></i>
+                <span>AI-generated guidance. For severe cases, click "Ask Expert" to request officer review.</span>
+              </div>
+            </div>
+
+            <div class="result-buttons-row" style="display: flex; gap: 16px; margin-top: 24px;">
+              <button class="btn-secondary" style="flex: 1; padding: 12px 16px; font-size: 14px;" id="btn-scan-escalate"><i class="fa-solid fa-user-doctor" style="margin-right: 6px;"></i> Ask Expert</button>
+              <button class="btn-primary" style="flex: 1; padding: 12px 16px; font-size: 14px;" id="btn-scan-save-report"><i class="fa-solid fa-file-pdf" style="margin-right: 6px;"></i> Save Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 8 — Live Weather Section -->
+    <section id="weather-section" class="app-section" style="display: none;">
+      <div class="onboarding-container" style="max-width: 760px;">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-weather-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <h2 class="wizard-title">Weather Intelligence 🌦</h2>
+          <p class="wizard-subtitle">Localized forecasts and action guidelines for your farm plot.</p>
+
+          <div class="weather-current-detail-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: var(--krishi-green-100); border-radius: var(--border-radius-md); padding: 24px; box-shadow: var(--shadow-card); margin-bottom: 24px;">
+            <div class="weather-main-panel" style="display: flex; flex-direction: column; justify-content: center;">
+              <div class="temp-row" style="display: flex; align-items: baseline; gap: 16px;">
+                <span class="detail-temp-val" id="weather-detail-temp" style="font-size: 4rem; font-family: var(--font-display); font-weight: 700; color: var(--krishi-green-900); line-height: 1;">31°C</span>
+                <div class="temp-cond-col" style="display: flex; flex-direction: column;">
+                  <span class="cond-val" id="weather-detail-condition" style="font-size: 16px; font-weight: 700; color: var(--krishi-green-900);">Partly Cloudy</span>
+                  <span class="humidity-val" style="font-size: 13px; color: var(--text-secondary);"><i class="fa-solid fa-droplet" style="color: var(--krishi-sky-500);"></i> Humid: <span id="weather-detail-humidity">62%</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="weather-sub-panel" style="display: flex; flex-direction: column; justify-content: center; gap: 10px; border-left: 1px solid rgba(27,59,44,0.1); padding-left: 20px; font-size: 14px; color: var(--text-secondary);">
+              <div class="sub-item"><i class="fa-solid fa-wind" style="color: var(--krishi-earth-500); width: 20px;"></i> Wind: <strong id="weather-detail-wind" style="color: var(--krishi-green-900);">14 km/h</strong></div>
+              <div class="sub-item"><i class="fa-solid fa-cloud-showers-heavy" style="color: var(--krishi-sky-500); width: 20px;"></i> Rain: <strong id="weather-detail-precipitation" style="color: var(--krishi-green-900);">0.2 mm</strong></div>
+              <div class="sub-item"><i class="fa-solid fa-sun" style="color: var(--krishi-amber-400); width: 20px;"></i> UV Index: <strong style="color: var(--krishi-green-900);">Low (2)</strong></div>
+            </div>
+          </div>
+
+          <div class="forecast-section-block" style="margin-top: 24px;">
+            <h3 class="wizard-section-label" style="font-size: 15px; color: var(--krishi-green-900); font-weight: 700; margin-bottom: 12px;">5-Day Daily Forecast</h3>
+            <div class="forecast-row-grid" id="forecast-daily-container" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+              <div class="forecast-day-card" style="background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 16px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: var(--shadow-card);"><span class="day-name" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Mon</span><i class="fa-solid fa-cloud-sun" style="font-size: 24px; color: var(--krishi-sky-500);"></i><span class="day-temp" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">32°C</span></div>
+              <div class="forecast-day-card" style="background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 16px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: var(--shadow-card);"><span class="day-name" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Tue</span><i class="fa-solid fa-cloud-showers-heavy" style="font-size: 24px; color: var(--krishi-sky-500);"></i><span class="day-temp" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">29°C</span></div>
+              <div class="forecast-day-card" style="background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 16px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: var(--shadow-card);"><span class="day-name" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Wed</span><i class="fa-solid fa-cloud-sun-rain" style="font-size: 24px; color: var(--krishi-sky-500);"></i><span class="day-temp" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">30°C</span></div>
+              <div class="forecast-day-card" style="background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 16px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: var(--shadow-card);"><span class="day-name" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Thu</span><i class="fa-solid fa-sun" style="font-size: 24px; color: var(--krishi-amber-400);"></i><span class="day-temp" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">33°C</span></div>
+              <div class="forecast-day-card" style="background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 16px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; box-shadow: var(--shadow-card);"><span class="day-name" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Fri</span><i class="fa-solid fa-cloud" style="font-size: 24px; color: var(--text-secondary);"></i><span class="day-temp" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">31°C</span></div>
+            </div>
+          </div>
+
+          <div class="weather-rules-block" style="margin-top: 28px;">
+            <h3 class="wizard-section-label" style="font-size: 15px; color: var(--krishi-green-900); font-weight: 700; margin-bottom: 12px;">Weather-Based Farm Advisories</h3>
+            <div class="weather-rules-list" id="weather-detail-rules" style="display: flex; flex-direction: column; gap: 12px;">
+              <div class="weather-rule-card warning" style="background: var(--krishi-amber-100); border: 1px solid var(--krishi-amber-400); border-radius: var(--border-radius-md); padding: 16px; display: flex; gap: 12px; align-items: flex-start; color: #925f05;">
+                <i class="fa-solid fa-circle-exclamation" style="font-size: 1.25rem; color: var(--krishi-warning); margin-top: 2px;"></i>
+                <div class="rule-info" style="display: flex; flex-direction: column; gap: 2px; font-size: 13.5px;">
+                  <strong style="color: var(--krishi-green-900);">Rainfall Expected Tomorrow</strong>
+                  <p style="color: var(--text-secondary); line-height: 1.4;">Farms with crops should consider postponing chemical spraying and major irrigation to prevent fertilizer run-off.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 9 — My Farm Map Section -->
+    <section id="my-farm-section" class="app-section" style="display: none;">
+      <div class="onboarding-container" style="max-width: 760px;">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-map-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <h2 class="wizard-title">Interactive Farm Plot Map 🗺</h2>
+          <p class="wizard-subtitle">Visual representation of your farm layout. Click a sector to review specifications.</p>
+
+          <div class="interactive-map-layout" style="display: flex; justify-content: center; margin: 20px 0;">
+            <div class="map-grid-container" style="position: relative; width: 280px; height: 280px; background: var(--krishi-beige-200); border: 4px solid var(--krishi-green-900); border-radius: 50%; overflow: hidden; box-shadow: var(--shadow-soft);">
+              <div class="map-sector-block n-block" data-sector="North" style="position: absolute; top: 0; left: 0; right: 0; height: 50%; border-bottom: 2px solid var(--krishi-green-900); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px; background: rgba(47,93,58,0.1);">
+                <div class="sector-inner" style="display: flex; flex-direction: column; gap: 2px; pointer-events: none;">
+                  <span class="dir-tag" style="font-size: 11px; font-weight: 700; color: var(--text-secondary);">North</span>
+                  <span class="crop-tag" id="map-crop-North" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Wheat</span>
+                  <span class="area-tag" id="map-area-North" style="font-size: 11px; color: var(--text-secondary);">2.5 Acres</span>
+                </div>
+              </div>
+              <div class="map-sector-block s-block" data-sector="South" style="position: absolute; bottom: 0; left: 0; right: 0; height: 50%; border-top: 2px solid var(--krishi-green-900); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px; background: rgba(47,93,58,0.15);">
+                <div class="sector-inner" style="display: flex; flex-direction: column; gap: 2px; pointer-events: none;">
+                  <span class="dir-tag" style="font-size: 11px; font-weight: 700; color: var(--text-secondary);">South</span>
+                  <span class="crop-tag" id="map-crop-South" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Empty</span>
+                  <span class="area-tag" id="map-area-South" style="font-size: 11px; color: var(--text-secondary);">—</span>
+                </div>
+              </div>
+              <div class="map-sector-block w-block" data-sector="West" style="position: absolute; top: 0; bottom: 0; left: 0; width: 50%; border-right: 2px solid var(--krishi-green-900); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px; background: rgba(47,93,58,0.08); z-index: 10;">
+                <div class="sector-inner" style="display: flex; flex-direction: column; gap: 2px; pointer-events: none;">
+                  <span class="dir-tag" style="font-size: 11px; font-weight: 700; color: var(--text-secondary);">West</span>
+                  <span class="crop-tag" id="map-crop-West" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Cotton</span>
+                  <span class="area-tag" id="map-area-West" style="font-size: 11px; color: var(--text-secondary);">1.5 Acres</span>
+                </div>
+              </div>
+              <div class="map-sector-block e-block" data-sector="East" style="position: absolute; top: 0; bottom: 0; right: 0; width: 50%; border-left: 2px solid var(--krishi-green-900); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; text-align: center; padding: 12px; background: rgba(47,93,58,0.12); z-index: 10;">
+                <div class="sector-inner" style="display: flex; flex-direction: column; gap: 2px; pointer-events: none;">
+                  <span class="dir-tag" style="font-size: 11px; font-weight: 700; color: var(--text-secondary);">East</span>
+                  <span class="crop-tag" id="map-crop-East" style="font-size: 14px; font-weight: 700; color: var(--krishi-green-900);">Groundnut</span>
+                  <span class="area-tag" id="map-area-East" style="font-size: 11px; color: var(--text-secondary);">1.0 Acres</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sector Detail Panel -->
+          <div class="map-detail-panel" id="map-detail-panel" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px; box-shadow: var(--shadow-card); margin-top: 24px;">
+            <h3 class="panel-title" style="font-size: 16px; color: var(--krishi-green-900); font-weight: 700; border-bottom: 1.5px solid var(--krishi-beige-200); padding-bottom: 8px; margin-bottom: 12px;">Sector Specifications: <span id="map-detail-sector-name">North</span></h3>
+            <div class="panel-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 14px;">
+              <div class="panel-item"><span>Crop Assigned:</span> <strong id="map-detail-crop">Wheat</strong></div>
+              <div class="panel-item"><span>Section Area:</span> <strong id="map-detail-area">2.5 Acres</strong></div>
+              <div class="panel-item"><span>Soil Type:</span> <strong id="map-detail-soil">Black Soil</strong></div>
+              <div class="panel-item"><span>Water Supply:</span> <strong id="map-detail-water">Canal</strong></div>
+              <div class="panel-item"><span>Advisory Status:</span> <strong id="map-detail-advisory" style="color: var(--krishi-green-700);">Stable</strong></div>
+              <div class="panel-item"><span>Disease History:</span> <strong id="map-detail-history">None</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 10 — Government Schemes -->
+    <section id="schemes-section" class="app-section" style="display: none;">
+      <div class="onboarding-container" style="max-width: 800px;">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-schemes-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <h2 class="wizard-title">Government Schemes Hub 🏛</h2>
+          <p class="wizard-subtitle">Direct links and guidelines for active agricultural support schemes.</p>
+
+          <div class="schemes-layout-grid" style="display: flex; flex-direction: column; gap: 24px; margin-top: 16px;">
+            <!-- PM Kisan -->
+            <div class="scheme-detail-card" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); padding: 24px; box-shadow: var(--shadow-card); position: relative; display: flex; flex-direction: column; gap: 12px;">
+              <div class="scheme-badge" style="position: absolute; top: 24px; right: 24px; background: var(--krishi-green-100); color: var(--krishi-green-700); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: var(--border-radius-pill);">PM-KISAN</div>
+              <h3 style="font-size: 18px; color: var(--krishi-green-900); font-weight: 700; padding-right: 90px;">Pradhan Mantri Kisan Samman Nidhi</h3>
+              <p class="scheme-desc" style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.4;">An initiative by the Government of India that provides up to ₹6,000 per year in three equal installments to small and marginal farmers.</p>
+              <div class="scheme-specs" style="background: var(--krishi-beige-50); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 14px; font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+                <div class="spec-item"><strong>Eligibility:</strong> Land-holding farmer families with cultivable land holdings in their names.</div>
+                <div class="spec-item"><strong>Benefits:</strong> ₹6,000 direct benefit transfer bank deposits annually.</div>
+                <div class="spec-item"><strong>Required Documents:</strong> Aadhaar Card, Land ownership papers, Bank account details.</div>
+              </div>
+              <a href="https://pmkisan.gov.in/" target="_blank" rel="noopener" class="btn-primary scheme-btn" style="align-self: flex-start; font-size: 14px; padding: 10px 20px;">Apply on Official Portal <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 6px;"></i></a>
+            </div>
+
+            <!-- Fasal Bima -->
+            <div class="scheme-detail-card" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); padding: 24px; box-shadow: var(--shadow-card); position: relative; display: flex; flex-direction: column; gap: 12px;">
+              <div class="scheme-badge" style="position: absolute; top: 24px; right: 24px; background: var(--krishi-green-100); color: var(--krishi-green-700); font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: var(--border-radius-pill);">PMFBY</div>
+              <h3 style="font-size: 18px; color: var(--krishi-green-900); font-weight: 700; padding-right: 90px;">Pradhan Mantri Fasal Bima Yojana</h3>
+              <p class="scheme-desc" style="font-size: 13.5px; color: var(--text-secondary); line-height: 1.4;">An actuarial premium based crop insurance scheme offering comprehensive risk coverage against crop failure due to non-preventable natural risks.</p>
+              <div class="scheme-specs" style="background: var(--krishi-beige-50); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 14px; font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+                <div class="spec-item"><strong>Eligibility:</strong> All farmers growing notified crops in notified areas, including tenant farmers.</div>
+                <div class="spec-item"><strong>Benefits:</strong> Insurance claims coverage for post-harvest loss, localized calamities, and dry-spells.</div>
+                <div class="spec-item"><strong>Required Documents:</strong> Land records, sowing certificate, identity proof.</div>
+              </div>
+              <a href="https://pmfby.gov.in/" target="_blank" rel="noopener" class="btn-primary scheme-btn" style="align-self: flex-start; font-size: 14px; padding: 10px 20px;">Apply on Official Portal <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 6px;"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 11 — Expert Help -->
+    <section id="expert-help-section" class="app-section" style="display: none;">
+      <div class="onboarding-container" style="max-width: 720px;">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-expert-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <h2 class="wizard-title">Expert Consultation 👨‍🌾</h2>
+          <p class="wizard-subtitle">Submit query tickets directly to your local district agricultural officer.</p>
+
+          <div class="expert-split-container" style="display: flex; flex-direction: column; gap: 24px; margin-top: 16px;">
+            <div class="expert-form-col" style="background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px; display: flex; flex-direction: column; gap: 14px;">
+              <h3 class="wizard-section-label" style="font-size: 15px; color: var(--krishi-green-900); font-weight: 700; border-bottom: 1px solid var(--krishi-beige-200); padding-bottom: 6px; margin-bottom: 4px;">Create Consultation Ticket</h3>
+              <div class="input-group">
+                <label for="expert-crop" class="input-label">Affected Crop</label>
+                <select id="expert-crop" class="large-input select-input" style="height: 48px; font-size: 15px;">
+                  <option>Wheat</option>
+                  <option>Rice</option>
+                  <option>Maize</option>
+                  <option>Cotton</option>
+                  <option>Groundnut</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="expert-desc" class="input-label">Problem Description</label>
+                <textarea id="expert-desc" class="large-input" style="height: 100px; padding: 12px; font-family: var(--font-sans); font-size: 14px; line-height: 1.4;" placeholder="e.g. Yellow stripes appearing on leaves since 3 days..."></textarea>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Attach Leaf Image (Optional)</label>
+                <input type="file" id="expert-file" class="large-input" accept="image/*" style="height: auto; padding: 8px; font-size: 13px;">
+              </div>
+              <button class="btn-primary btn-full" id="btn-expert-submit" style="height: 48px;">Submit to Officer</button>
+            </div>
+
+            <div class="expert-tickets-col" style="border-top: 2px solid var(--krishi-beige-200); padding-top: 20px;">
+              <h3 class="wizard-section-label" style="font-size: 15px; color: var(--krishi-green-900); font-weight: 700; margin-bottom: 12px;">Ticket Status History</h3>
+              <div class="ticket-status-list" id="expert-tickets-container" style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="ticket-card empty-state" style="text-align: center; padding: 24px; background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); color: var(--text-secondary); font-size: 14px;">No consultation history found.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 12 — Farmer Profile Section -->
+    <section id="profile-section" class="app-section" style="display: none;">
+      <div class="onboarding-container">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-profile-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <h2 class="wizard-title">Farmer Profile 👤</h2>
+          <p class="wizard-subtitle">Manage your registry details and farm configurations.</p>
+
+          <div class="profile-details-grid" style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 16px;">
+            <div class="profile-data-card" style="background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+              <h3 class="wizard-section-label" style="font-size: 15px; color: var(--krishi-green-900); font-weight: 700; border-bottom: 1.5px solid var(--krishi-beige-200); padding-bottom: 6px; margin-bottom: 6px;">Identity Details</h3>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dashed var(--krishi-beige-200); padding-bottom: 8px;"><span>Full Name:</span> <strong id="prof-name">Ramesh Patel</strong></div>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dashed var(--krishi-beige-200); padding-bottom: 8px;"><span>Mobile Number:</span> <strong id="prof-mobile">+91 9876543210</strong></div>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dashed var(--krishi-beige-200); padding-bottom: 8px;"><span>State/Pincode:</span> <strong id="prof-state-pin">Kerala (678001)</strong></div>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; padding-bottom: 4px;"><span>District/Village:</span> <strong id="prof-district-village">Palakkad (Mannarkkad)</strong></div>
+            </div>
+
+            <div class="profile-data-card" style="background: var(--krishi-beige-50); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-md); padding: 20px; display: flex; flex-direction: column; gap: 10px;">
+              <h3 class="wizard-section-label" style="font-size: 15px; color: var(--krishi-green-900); font-weight: 700; border-bottom: 1.5px solid var(--krishi-beige-200); padding-bottom: 6px; margin-bottom: 6px;">Soil &amp; Irrigation Specifications</h3>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dashed var(--krishi-beige-200); padding-bottom: 8px;"><span>Land Area:</span> <strong id="prof-land">5.0 Acres</strong></div>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dashed var(--krishi-beige-200); padding-bottom: 8px;"><span>Soil Type:</span> <strong id="prof-soil">Black Soil</strong></div>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; border-bottom: 1px dashed var(--krishi-beige-200); padding-bottom: 8px;"><span>Water Sources:</span> <strong id="prof-water">Canal, Bore Well</strong></div>
+              <div class="profile-field-row" style="display: flex; justify-content: space-between; font-size: 14px; padding-bottom: 4px;"><span>Reliability:</span> <strong id="prof-reliability">Reliable</strong></div>
+            </div>
+          </div>
+
+          <div class="profile-actions-row" style="display: flex; gap: 16px; margin-top: 24px;">
+            <button class="btn-secondary" style="flex: 1; padding: 12px 16px; font-size: 14px;" id="btn-profile-edit"><i class="fa-solid fa-pen" style="margin-right: 6px;"></i> Edit Details</button>
+            <button class="btn-primary" style="flex: 1; padding: 12px 16px; font-size: 14px;" id="btn-profile-advisory-history"><i class="fa-solid fa-history" style="margin-right: 6px;"></i> View Advisory History</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 13 — Settings Section -->
+    <section id="settings-section" class="app-section" style="display: none;">
+      <div class="onboarding-container">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-settings-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          <h2 class="wizard-title">App Preferences &amp; Settings ⚙</h2>
+          <p class="wizard-subtitle">Adjust parameters, notification channels, and active languages.</p>
+
+          <div class="settings-options-list" style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+            <!-- Language selector dropdown -->
+            <div class="setting-item-row" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--krishi-beige-200); padding-bottom: 14px;">
+              <div class="setting-item-label" style="display: flex; flex-direction: column; gap: 2px; max-width: 70%;">
+                <strong style="font-size: 15px; color: var(--krishi-green-900);">Language Choice</strong>
+                <p style="font-size: 12px; color: var(--text-secondary);">Set active interface string translations.</p>
+              </div>
+              <select id="settings-lang-select" class="large-input select-input" style="max-width: 160px; height: 48px; font-size: 14px; padding: 0 12px;">
+                <option value="English">English</option>
+                <option value="Gujarati">Gujarati (ગુજરાતી)</option>
+              </select>
+            </div>
+
+            <!-- Theme switcher -->
+            <div class="setting-item-row" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--krishi-beige-200); padding-bottom: 14px;">
+              <div class="setting-item-label" style="display: flex; flex-direction: column; gap: 2px; max-width: 70%;">
+                <strong style="font-size: 15px; color: var(--krishi-green-900);">Display Mode</strong>
+                <p style="font-size: 12px; color: var(--text-secondary);">Toggle light or dark theme interface.</p>
+              </div>
+              <button class="btn-secondary" id="settings-btn-theme" style="padding: 10px 20px; font-size: 14px; font-weight: 600;"><i class="fa-solid fa-sun" style="margin-right: 6px;"></i> Light Mode</button>
+            </div>
+
+            <!-- Toggles notifications -->
+            <div class="setting-notifications-block" style="display: flex; flex-direction: column; gap: 12px;">
+              <h3 class="wizard-section-label" style="font-size: 14px; color: var(--krishi-green-900); font-weight: 700; border-bottom: 1px solid var(--krishi-beige-200); padding-bottom: 4px; margin-bottom: 4px;">Advisory Push Channels</h3>
+              <div class="toggle-control-item" style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-primary);">
+                <span>Weather Alerts</span>
+                <input type="checkbox" id="sett-toggle-weather" checked style="width: 20px; height: 20px; accent-color: var(--krishi-green-700); cursor: pointer;">
+              </div>
+              <div class="toggle-control-item" style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-primary);">
+                <span>Personalized Advisories</span>
+                <input type="checkbox" id="sett-toggle-advisory" checked style="width: 20px; height: 20px; accent-color: var(--krishi-green-700); cursor: pointer;">
+              </div>
+              <div class="toggle-control-item" style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-primary);">
+                <span>Expert Officer Responses</span>
+                <input type="checkbox" id="sett-toggle-expert" checked style="width: 20px; height: 20px; accent-color: var(--krishi-green-700); cursor: pointer;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Phase 14 — PDF Advisory Report Section -->
+    <section id="pdf-report-section" class="app-section" style="display: none;">
+      <div class="onboarding-container" style="max-width: 760px;">
+        <div class="wizard-card">
+          <button class="btn-back" id="btn-report-back" style="margin-bottom: 16px;"><i class="fa-solid fa-arrow-left"></i> Dashboard</button>
+          
+          <div class="report-action-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; border-bottom: 1.5px solid var(--krishi-beige-200); padding-bottom: 12px;">
+            <h2 class="wizard-title" style="margin-bottom: 0; font-size: 1.4rem;">Digital Advisory Report</h2>
+            <div class="action-buttons-group" style="display: flex; gap: 10px;">
+              <button class="btn-secondary" id="btn-report-download" style="padding: 10px 18px; font-size: 14px; font-weight: 600;"><i class="fa-solid fa-download" style="margin-right: 6px;"></i> Download PDF</button>
+              <button class="btn-primary" id="btn-report-whatsapp" style="padding: 10px 18px; font-size: 14px; font-weight: 600; background-color: #25D366; box-shadow: none; border-color: #25D366;"><i class="fa-brands fa-whatsapp" style="margin-right: 6px;"></i> Share on WhatsApp</button>
+            </div>
+          </div>
+
+          <!-- Report Canvas Preview -->
+          <div class="report-paper-preview" id="report-paper-content" style="background: white; border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm); padding: 32px; color: #1E2B22; box-shadow: var(--shadow-card); font-family: 'Poppins', sans-serif;">
+            <div class="report-header" style="border-bottom: 2px solid #1B3B2C; padding-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <h1 style="color: #1B3B2C; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">KRISHI SAHAYAK</h1>
+                <p style="font-size: 11px; color: #5B6B5F; margin-top: 2px;">AI-Powered Crop Advisory Document</p>
+              </div>
+              <div style="text-align: right; font-size: 11px; color: #5B6B5F;">
+                <p>Date: <strong id="rep-date">10-Aug-2026</strong></p>
+                <p>Report ID: <strong>KS-987452</strong></p>
+              </div>
+            </div>
+
+            <div class="report-meta-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; font-size: 12.5px; border-bottom: 1px dashed var(--krishi-beige-200); padding-bottom: 16px;">
+              <div>
+                <h4 style="color: #1B3B2C; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">Farmer Specifications</h4>
+                <p style="margin-bottom: 4px;">Name: <strong id="rep-farmer-name">Ramesh Patel</strong></p>
+                <p style="margin-bottom: 4px;">Mobile: <strong id="rep-farmer-mobile">+91 9876543210</strong></p>
+                <p>Location: <strong id="rep-farmer-loc">Palakkad, Kerala</strong></p>
+              </div>
+              <div>
+                <h4 style="color: #1B3B2C; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;">Farm Parameters</h4>
+                <p style="margin-bottom: 4px;">Land Size: <strong id="rep-farmer-land">5.0 Acres</strong></p>
+                <p style="margin-bottom: 4px;">Soil Type: <strong id="rep-farmer-soil">Black Soil</strong></p>
+                <p>Water Source: <strong id="rep-farmer-water">Canal (Reliable)</strong></p>
+              </div>
+            </div>
+
+            <div class="report-content-block" style="margin-top: 20px;">
+              <h3 style="color: #1B3B2C; font-size: 15px; font-weight: 700; margin-bottom: 8px;">🌦 Weather Summary</h3>
+              <p style="font-size: 13px; line-height: 1.5; color: #3E4D41;" id="rep-weather-txt">Temperature is 31°C with partly cloudy skies. Humidity at 62% and winds are blowing at 14 km/h.</p>
+            </div>
+
+            <div class="report-content-block" style="margin-top: 20px; border-top: 1px solid var(--krishi-beige-200); padding-top: 16px;">
+              <h3 style="color: #1B3B2C; font-size: 15px; font-weight: 700; margin-bottom: 8px;">🌾 Personalized Field Advisories</h3>
+              <div style="background-color: var(--krishi-green-100); border-left: 4px solid var(--krishi-green-700); padding: 12px 16px; border-radius: 4px;" id="rep-advisory-container">
+                <strong style="color: #1B3B2C; font-size: 13.5px;" id="rep-advisory-title">Irrigation Guideline</strong>
+                <p style="font-size: 13px; color: #1E2B22; margin-top: 4px; line-height: 1.45;" id="rep-advisory-desc">Weather indications show a low chance of rain. Light irrigation is recommended for your crop tomorrow morning.</p>
+              </div>
+            </div>
+
+            <div class="report-disclaimer-block" style="margin-top: 36px; border-top: 1px solid #1B3B2C; padding-top: 12px; font-size: 10.5px; color: #5B6B5F; text-align: center; line-height: 1.4;">
+              <strong>Disclaimer:</strong> Advisory generated automatically based on local environmental parameters and crop characteristics. Agronomic algorithms are decision support tools and do not substitute professional agricultural inspections.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Krishi Sahayak. Designed for Indian Farmers.</p>
+      <p style="font-size: 12px; color: var(--text-secondary); opacity: 0.8;">Trusted digital assistant connecting crop data, soil, and live advisory.</p>
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <!-- Location Selector Modal -->
+  <div class="modal-overlay" id="location-modal" role="dialog" aria-labelledby="location-modal-title" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="location-modal-close" aria-label="Close dialog">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 class="modal-title" id="location-modal-title">Select Location</h2>
+      <p class="modal-subtitle">Choose your district for localized weather and advisory.</p>
+      <div class="modal-options-list">
+        <div class="modal-option-item selected" data-value="Palakkad, Kerala">
+          <span>Palakkad, Kerala</span>
+        </div>
+        <div class="modal-option-item" data-value="Nashik, Maharashtra">
+          <span>Nashik, Maharashtra</span>
+        </div>
+        <div class="modal-option-item" data-value="Anand, Gujarat">
+          <span>Anand, Gujarat</span>
+        </div>
+        <div class="modal-option-item" data-value="Bathinda, Punjab">
+          <span>Bathinda, Punjab</span>
+        </div>
+        <div class="modal-option-item" data-value="Guntur, Andhra Pradesh">
+          <span>Guntur, Andhra Pradesh</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Language Selector Modal -->
+  <div class="modal-overlay" id="lang-modal" role="dialog" aria-labelledby="lang-modal-title" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="lang-modal-close" aria-label="Close dialog">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h2 class="modal-title" id="lang-modal-title">Select Language</h2>
+      <p class="modal-subtitle">Choose your preferred language for the application.</p>
+      <div class="modal-options-list">
+        <div class="modal-option-item selected" data-value="English">
+          <span>English</span>
+        </div>
+        <div class="modal-option-item" data-value="Gujarati">
+          <span>Gujarati (ગુજરાતી)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="app.js"></script>
+</body>
+</html>

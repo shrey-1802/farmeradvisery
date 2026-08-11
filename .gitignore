@@ -1,0 +1,55 @@
+# ===========================
+# Environment & Secrets
+# ===========================
+.env
+.env.local
+.env.*.local
+.env.production
+
+# ===========================
+# Node.js
+# ===========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===========================
+# NestJS Build Output
+# ===========================
+dist/
+build/
+
+# ===========================
+# Uploads & Generated Files
+# ===========================
+# Ignore all uploaded content but preserve folder structure via .gitkeep
+uploads/**/*
+!uploads/**/.gitkeep
+*.pdf
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+
+# ===========================
+# Test Coverage
+# ===========================
+coverage/
+.nyc_output/
+
+# ===========================
+# IDEs & Editors
+# ===========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
