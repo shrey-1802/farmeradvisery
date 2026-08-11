@@ -79,10 +79,29 @@
     </div>
   </nav>
 
-  <!-- Floating AI Button -->
+  <!-- Floating AI Button & Dedicated Chat Widget -->
   <button class="floating-ai-btn" id="floating-ai-btn" aria-label="Ask Krishi AI Assistant">
     <i class="fa-solid fa-robot"></i>
   </button>
+
+  <div class="floating-chat-widget" id="floating-chat-widget" style="display: none; position: fixed; bottom: 88px; right: 24px; width: 360px; max-width: 90vw; height: 480px; max-height: 80vh; background: var(--krishi-beige-100); border: 2px solid var(--krishi-green-900); border-radius: var(--border-radius-lg); box-shadow: 0 12px 32px rgba(0,0,0,0.25); z-index: 1000; flex-direction: column; overflow: hidden; animation: fadeSlideIn 0.3s ease;">
+    <div class="floating-chat-header" style="background: var(--krishi-green-900); color: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-robot" style="color: var(--krishi-amber-400);"></i>
+        <strong style="font-size: 14px; color: #FBF8F1;">Krishi AI Advisory Chat</strong>
+      </div>
+      <button id="floating-chat-close" style="background: none; border: none; color: white; cursor: pointer; font-size: 16px;" aria-label="Close chat"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="floating-chat-messages" id="floating-chat-messages" style="flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: var(--krishi-beige-50);">
+      <div class="chat-bubble bot" style="align-self: flex-start; background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: 12px 12px 12px 0; padding: 10px 14px; font-size: 13px; color: var(--text-primary); line-height: 1.4;">
+        🤖 Namaste! Ask any crop, weather, or farming questions. Answers appear directly in this chat!
+      </div>
+    </div>
+    <div class="floating-chat-input-row" style="padding: 8px 12px; background: var(--krishi-beige-100); border-top: 1px solid var(--krishi-beige-200); display: flex; gap: 8px; align-items: center;">
+      <input type="text" id="floating-chat-input" placeholder="Type your question..." style="flex: 1; border: 1.5px solid var(--krishi-beige-200); background: white; border-radius: 20px; padding: 6px 14px; font-size: 13px; outline: none; color: var(--text-primary);">
+      <button id="floating-chat-send" style="width: 36px; height: 36px; border-radius: 50%; background: var(--krishi-green-700); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fa-solid fa-paper-plane" style="font-size: 13px;"></i></button>
+    </div>
+  </div>
 
   <!-- Main Content Wrapper -->
   <main class="main-content container">
@@ -112,21 +131,33 @@
             </button>
           </div>
 
-          <!-- Inline Mini-Chat Card -->
-          <div class="mini-chat-card">
-            <div class="mini-chat-label">
-              <i class="fa-solid fa-robot"></i>
-              <span>Ask Krishi AI</span>
+          <!-- Dedicated Landing Page AI Advisory Chatbox -->
+          <div class="mini-chat-card" id="landing-ai-chatbox" style="background: var(--krishi-beige-100); border: 1.5px solid var(--krishi-beige-200); border-radius: var(--border-radius-lg); padding: 16px; box-shadow: var(--shadow-card);">
+            <div class="mini-chat-label" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-robot" style="color: var(--krishi-green-700); font-size: 16px;"></i>
+                <span style="font-weight: 700; color: var(--krishi-green-900); font-size: 14px;">Krishi AI Advisory Chatbox</span>
+              </div>
+              <span class="chat-status-pill" style="font-size: 11px; background: var(--krishi-green-100); color: var(--krishi-green-700); padding: 2px 10px; border-radius: 12px; font-weight: 600;">● Live Assistant</span>
             </div>
+
+            <!-- Messages Window inside Chatbox -->
+            <div class="landing-chat-messages" id="landing-chat-messages" style="max-height: 200px; min-height: 100px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; margin: 8px 0; padding: 10px; background: var(--krishi-beige-50); border: 1px solid var(--krishi-beige-200); border-radius: var(--border-radius-sm);">
+              <div class="chat-bubble bot" style="align-self: flex-start; background: var(--krishi-beige-100); border: 1px solid var(--krishi-beige-200); border-radius: 12px 12px 12px 0; padding: 8px 12px; font-size: 13px; color: var(--text-primary); line-height: 1.4; max-width: 90%;">
+                <i class="fa-solid fa-robot" style="color: var(--krishi-green-700); margin-right: 4px;"></i> Namaste! Ask me any crop or weather question. Answers appear right here inside this chatbox!
+              </div>
+            </div>
+
+            <!-- Quick Suggestions Strip -->
+            <div class="landing-chat-suggestions" style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 8px;">
+              <button class="landing-sug-pill" data-query="Should I irrigate today?" style="background: var(--krishi-beige-50); border: 1px solid var(--krishi-beige-200); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; white-space: nowrap; color: var(--krishi-green-900);">💧 Should I irrigate today?</button>
+              <button class="landing-sug-pill" data-query="Why are my wheat leaves yellow?" style="background: var(--krishi-beige-50); border: 1px solid var(--krishi-beige-200); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; white-space: nowrap; color: var(--krishi-green-900);">🍂 Wheat leaf yellowing</button>
+              <button class="landing-sug-pill" data-query="Best fertilizer for cotton" style="background: var(--krishi-beige-50); border: 1px solid var(--krishi-beige-200); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 12px; cursor: pointer; white-space: nowrap; color: var(--krishi-green-900);">🌾 Fertilizer advice</button>
+            </div>
+
             <div class="mini-chat-input-row">
               <input type="text" class="mini-chat-input" id="mini-chat-input" placeholder="Ask Krishi AI... e.g. Why are my wheat leaves turning yellow?" aria-label="Ask Krishi AI">
               <div class="mini-chat-actions">
-                <button class="mini-chat-btn" id="mini-chat-mic" aria-label="Voice input">
-                  <i class="fa-solid fa-microphone"></i>
-                </button>
-                <button class="mini-chat-btn" id="mini-chat-camera" aria-label="Upload crop image">
-                  <i class="fa-solid fa-camera"></i>
-                </button>
                 <button class="mini-chat-btn mini-chat-send" id="mini-chat-send" aria-label="Send message">
                   <i class="fa-solid fa-paper-plane"></i>
                 </button>

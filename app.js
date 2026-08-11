@@ -237,32 +237,80 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast(isDarkMode ? '🌙 Dark Mode (Farm at Dusk) enabled' : '☀️ Light Mode (Digital Krishi) enabled');
   };
 
-  // Mini-Chat Interaction on Landing Page
+  // Dedicated Landing Page AI Advisory Chatbox Handler (NO pop-up notifications)
   const miniChatSend = document.getElementById('mini-chat-send');
   const miniChatInput = document.getElementById('mini-chat-input');
-  
-  const handleMiniChatSubmit = () => {
-    if (!miniChatInput) return;
-    const query = miniChatInput.value.trim();
-    if (query === '') return;
+  const landingChatMessages = document.getElementById('landing-chat-messages');
 
-    showToast(`Sending: "${query}"`);
-    miniChatInput.value = '';
+  const addLandingChatMessage = (text, sender) => {
+    if (!landingChatMessages) return;
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${sender}`;
+    Object.assign(bubble.style, {
+      alignSelf: sender === 'user' ? 'flex-end' : 'flex-start',
+      background: sender === 'user' ? 'var(--krishi-green-700)' : 'var(--krishi-beige-100)',
+      border: '1px solid var(--krishi-beige-200)',
+      borderRadius: sender === 'user' ? '12px 12px 0 12px' : '12px 12px 12px 0',
+      padding: '8px 12px',
+      maxWidth: '88%',
+      fontSize: '13px',
+      color: sender === 'user' ? 'white' : 'var(--text-primary)',
+      lineHeight: '1.45',
+      boxShadow: 'var(--shadow-card)'
+    });
+    bubble.innerHTML = sender === 'bot' ? `<i class="fa-solid fa-robot" style="color: var(--krishi-green-700); margin-right: 4px;"></i> ${text}` : text;
+    landingChatMessages.appendChild(bubble);
+    landingChatMessages.scrollTop = landingChatMessages.scrollHeight;
+  };
+
+  const handleMiniChatSubmit = (customQuery) => {
+    const query = customQuery || (miniChatInput ? miniChatInput.value.trim() : '');
+    if (!query) return;
+
+    // Render User message bubble inside Chatbox
+    addLandingChatMessage(query, 'user');
+    if (miniChatInput) miniChatInput.value = '';
+
+    // Render Typing bubble inside Chatbox
+    const typingBubble = document.createElement('div');
+    typingBubble.className = 'chat-bubble bot typing';
+    Object.assign(typingBubble.style, {
+      alignSelf: 'flex-start',
+      background: 'var(--krishi-beige-100)',
+      border: '1px solid var(--krishi-beige-200)',
+      borderRadius: '12px 12px 12px 0',
+      padding: '8px 12px',
+      fontSize: '12.5px',
+      fontStyle: 'italic',
+      color: 'var(--text-secondary)'
+    });
+    typingBubble.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Krishi AI is generating advice...';
+    landingChatMessages.appendChild(typingBubble);
+    landingChatMessages.scrollTop = landingChatMessages.scrollHeight;
 
     setTimeout(() => {
+      typingBubble.remove();
       const response = generateAIResponse(query);
-      showToast(response, 5000, '🤖 Krishi AI');
-    }, 1000);
+      // Render AI response bubble inside Chatbox (NO pop-up toast!)
+      addLandingChatMessage(response, 'bot');
+    }, 800);
   };
 
   if (miniChatSend && miniChatInput) {
-    miniChatSend.addEventListener('click', handleMiniChatSubmit);
+    miniChatSend.addEventListener('click', () => handleMiniChatSubmit());
     miniChatInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        handleMiniChatSubmit();
-      }
+      if (e.key === 'Enter') handleMiniChatSubmit();
     });
   }
+
+  // Suggestion Pills on Landing Page Chatbox
+  const landingSugPills = document.querySelectorAll('.landing-sug-pill');
+  landingSugPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const q = pill.getAttribute('data-query');
+      handleMiniChatSubmit(q);
+    });
+  });
 
   // Welcome page CTAs
   const btnGetStarted = document.getElementById('btn-get-started');
@@ -281,22 +329,106 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnLearnMore) {
     btnLearnMore.addEventListener('click', () => {
-      showToast('Krishi Sahayak is a Decision Support System connecting local weather, soil context, AI diagnosis, and human experts.', 6000);
+      navigateToSection('login-section');
     });
   }
 
-  // Floating AI Button
+  // Dedicated Floating AI Advisory Chat Widget Handler
   const floatingAiBtn = document.getElementById('floating-ai-btn');
-  if (floatingAiBtn) {
+  const floatingChatWidget = document.getElementById('floating-chat-widget');
+  const floatingChatClose = document.getElementById('floating-chat-close');
+  const floatingChatInput = document.getElementById('floating-chat-input');
+  const floatingChatSend = document.getElementById('floating-chat-send');
+  const floatingChatMessages = document.getElementById('floating-chat-messages');
+
+  if (floatingAiBtn && floatingChatWidget) {
     floatingAiBtn.addEventListener('click', () => {
-      if (isLoggedIn) {
-        navigateToSection('ai-chat-section');
-      } else {
-        showToast('🤖 Please log in first to chat with Krishi AI Assistant.');
-        navigateToSection('login-section');
-      }
+      const isVisible = floatingChatWidget.style.display === 'flex';
+      floatingChatWidget.style.display = isVisible ? 'none' : 'flex';
+      if (!isVisible && floatingChatInput) floatingChatInput.focus();
     });
   }
+
+  if (floatingChatClose && floatingChatWidget) {
+    floatingChatClose.addEventListener('click', () => {
+      floatingChatWidget.style.display = 'none';
+    });
+  }
+
+  const addFloatingChatMessage = (text, sender) => {
+    if (!floatingChatMessages) return;
+    const bubble = document.createElement('div');
+    bubble.className = `chat-bubble ${sender}`;
+    Object.assign(bubble.style, {
+      alignSelf: sender === 'user' ? 'flex-end' : 'flex-start',
+      background: sender === 'user' ? 'var(--krishi-green-700)' : 'var(--krishi-beige-100)',
+      border: '1px solid var(--krishi-beige-200)',
+      borderRadius: sender === 'user' ? '12px 12px 0 12px' : '12px 12px 12px 0',
+      padding: '8px 12px',
+      maxWidth: '85%',
+      fontSize: '13px',
+      color: sender === 'user' ? 'white' : 'var(--text-primary)',
+      lineHeight: '1.45'
+    });
+    bubble.innerHTML = sender === 'bot' ? `🤖 ${text}` : text;
+    floatingChatMessages.appendChild(bubble);
+    floatingChatMessages.scrollTop = floatingChatMessages.scrollHeight;
+  };
+
+  const handleFloatingChatSubmit = () => {
+    if (!floatingChatInput) return;
+    const text = floatingChatInput.value.trim();
+    if (!text) return;
+
+    addFloatingChatMessage(text, 'user');
+    floatingChatInput.value = '';
+
+    const typingBubble = document.createElement('div');
+    typingBubble.style.alignSelf = 'flex-start';
+    typingBubble.style.fontSize = '12px';
+    typingBubble.style.fontStyle = 'italic';
+    typingBubble.style.color = 'var(--text-secondary)';
+    typingBubble.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Krishi AI is typing...';
+    floatingChatMessages.appendChild(typingBubble);
+    floatingChatMessages.scrollTop = floatingChatMessages.scrollHeight;
+
+    setTimeout(() => {
+      typingBubble.remove();
+      const res = generateAIResponse(text);
+      addFloatingChatMessage(res, 'bot');
+    }, 800);
+  };
+
+  if (floatingChatSend && floatingChatInput) {
+    floatingChatSend.addEventListener('click', handleFloatingChatSubmit);
+    floatingChatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleFloatingChatSubmit();
+    });
+  }
+
+  // Feature Cards on Landing Page launching Website
+  const featureCards = document.querySelectorAll('.features-section .feature-card');
+  const featureToSectionMap = {
+    0: 'pdf-report-section',
+    1: 'weather-section',
+    2: 'disease-scan-section',
+    3: 'ai-chat-section',
+    4: 'expert-help-section',
+    5: 'schemes-section'
+  };
+
+  featureCards.forEach((card, idx) => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const targetSec = featureToSectionMap[idx] || 'login-section';
+      if (!isLoggedIn) {
+        navigateToSection('login-section');
+        showToast('🔒 Please log in to access full platform features.');
+      } else {
+        navigateToSection(targetSec);
+      }
+    });
+  });
 
   // ==========================================
   // PHASE 2 - LOGIN & OTP LOGIC
