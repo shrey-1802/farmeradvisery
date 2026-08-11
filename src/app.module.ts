@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { validate } from './config/env.validation';
+import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { AdvisoryModule } from './modules/advisory/advisory.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -31,5 +32,6 @@ import { WeatherModule } from './modules/weather/weather.module';
     ExpertEscalationModule,
     ReportsModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
